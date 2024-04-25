@@ -26,21 +26,30 @@ import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textview.MaterialTextView;
 import com.sickle.healthcareapp.Interface.ItemClickListener;
 import com.sickle.healthcareapp.db.DatabaseHelper;
+import com.sickle.healthcareapp.fireStoreApi.FireStoreDB;
+import com.sickle.healthcareapp.model.medicineNameModels.MedicineFireStoreModel;
 
 import java.util.List;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
-    private List<HomeItem> homeItems;
+//    private List<MedicineFireStoreModel> homeItems;
     private Context context;
     private Activity activity;
     ItemClickListener itemClickListener;
-    public HomeAdapter(List<HomeItem> homeItems, Context context,Activity activity1,ItemClickListener itemClickListener) {
-        this.homeItems = homeItems;
+    public HomeAdapter( Context context, Activity activity1, ItemClickListener itemClickListener) {
+//        this.homeItems = homeItems;
         this.context = context;
         activity=activity1;
         this.itemClickListener=itemClickListener;
     }
+
+//    public HomeAdapter(List<HomeItem> homeItems, Context context,Activity activity1,ItemClickListener itemClickListener) {
+//        this.homeItems = homeItems;
+//        this.context = context;
+//        activity=activity1;
+//        this.itemClickListener=itemClickListener;
+//    }
 
     @NonNull
     @Override
@@ -54,11 +63,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        HomeItem homeItem = homeItems.get(position);
+        //HomeItem homeItem = homeItems.get(position);
 
-        holder.textMedicine.setText(homeItem.getMedicineName());
-        holder.textDosageSummary.setText("Dose  "+homeItem.getDose() );
-        holder.mdose.setText(homeItem.getDose()+ " times a day");
+        //active_ingredient_name,
+        holder.medicineNDC.setText("NDC: " + FireStoreDB.allMedicinesList.get(position).getMedicineNDC());
+        holder.active_ingredient_name.setText("Ingredent Name: " +FireStoreDB.allMedicinesList.get(position).getActiveIngredientName());
+        holder.active_ingredient_strength.setText("Ingredent Strength: " + FireStoreDB.allMedicinesList.get(position).getActiveIngredientStrength());
+
+        holder.textMedicine.setText(FireStoreDB.allMedicinesList.get(position).getMedicineName());
+        holder.textDosageSummary.setText("Dose  "+FireStoreDB.allMedicinesList.get(position).getTotalDoses() );
+        holder.mdose.setText(FireStoreDB.allMedicinesList.get(position).getTimings()+ " times a day");
 
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -96,10 +110,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                 EditText dose = (EditText) mView.findViewById(R.id.noofDose);
                 EditText schedule = (EditText) mView.findViewById(R.id.schedule);
                 EditText time = (EditText) mView.findViewById(R.id.etTime);
-                time.setText(homeItem.getTimings());
-                String nameMedicine=homeItem.getMedicineName();
-                dose.setText(homeItem.getDose());
-                schedule.setText(homeItem.getDosageSummary());
+                time.setText(FireStoreDB.allMedicinesList.get(position).getTimings());
+                String nameMedicine=FireStoreDB.allMedicinesList.get(position).getMedicineName();
+                dose.setText(FireStoreDB.allMedicinesList.get(position).getTotalDoses());
+                schedule.setText(FireStoreDB.allMedicinesList.get(position).getTimings());
                 name.setText(nameMedicine);
                 alert.setView(mView);
                 final AlertDialog alertDialog = alert.create();
@@ -118,7 +132,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                         int noOfTimesPerDay =2;
 
                         DatabaseHelper databaseHelper = new DatabaseHelper(context);
-                        databaseHelper.updateMedicine(homeItem.getMedicineName(),name.getText().toString(), day, month, year, Integer.parseInt(schedule.getText().toString()), Integer.parseInt(dose.getText().toString()), time.getText().toString().trim(), "reminderAlterType");
+                        databaseHelper.updateMedicine(FireStoreDB.allMedicinesList.get(position).getMedicineName(),name.getText().toString(), day, month, year, Integer.parseInt(schedule.getText().toString()), Integer.parseInt(dose.getText().toString()), time.getText().toString().trim(), "reminderAlterType");
 
                         itemClickListener.onClick(position);
 
@@ -134,12 +148,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return homeItems.size();
+        return FireStoreDB.allMedicinesList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        MaterialTextView textMedicine, textDosageSummary,mdose;
+        MaterialTextView textMedicine, textDosageSummary,mdose,active_ingredient_name,active_ingredient_strength,medicineNDC;
         CardView cardView;
         MaterialCheckBox checkBox;
         ImageButton imageButtonDelete;
@@ -147,6 +161,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
         ViewHolder(View itemView) {
             super(itemView);
+            active_ingredient_name=itemView.findViewById(R.id.active_ingredient_name);
+            active_ingredient_strength=itemView.findViewById(R.id.active_ingredient_strength);
+
+            medicineNDC=itemView.findViewById(R.id.medicineNDC);
             mdose=itemView.findViewById(R.id.dose);
             editbutton = itemView.findViewById(R.id.editbutton);
             textDosageSummary = itemView.findViewById(R.id.dosage_text_view);

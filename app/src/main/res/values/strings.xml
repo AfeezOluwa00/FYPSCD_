@@ -5,6 +5,7 @@
     <string name="login">Login</string>
     <string name="chat_with_mentor">Chat with a mentor</string>
 
+
     <!-- NOTIFICATION SERVICE -->
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="notification_title">"You have received a notification"</string>
@@ -89,6 +90,7 @@
     <string name="add_medicine">Add Medicine</string>
     <string name="string_time">Time</string>
     <string name="medicine_name_hint">Medicine name</string>
+    <string name="medicine_ndc_hint">Medicine NDC</string>
     <string name="string_from">From</string>
     <string name="string_schedule">Schedule</string>
     <string name="pick_a_time">Pick a time</string>
@@ -102,6 +104,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="time_to_take">Time to take&#160;</string>
     <string name="snooze">Snooze</string>
+    <string name="get_api">Get Name</string>
     <string name="dismiss">Dismiss</string>
     <string name="take">Take</string>
     <string name="notification">Notification</string>

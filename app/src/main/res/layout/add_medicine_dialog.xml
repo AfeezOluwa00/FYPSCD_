@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/hhhhh"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="50dp"
-android:id="@+id/hhhhh"
-    >
+    android:layout_marginBottom="50dp">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
@@ -44,37 +43,214 @@ android:id="@+id/hhhhh"
                 android:background="#C0CCDA"
                 android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:orientation="horizontal">
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.Design.TextInputLayout"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/editText_medicine_name"
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Design.TextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editText_medicine_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="24dp"
+                            android:layout_marginEnd="16dp"
+                            android:hint="@string/medicine_ndc_hint"
+                            android:textSize="24sp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <ImageView
+                        android:id="@+id/bar_code"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="8dp"
+
+                        android:layout_weight="1"
+                        android:src="@drawable/bar_code_24" />
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/get_api_btn"
+                    android:layout_gravity="end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:textSize="10sp"
+                    android:padding="10dp"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:background="@drawable/round_button_back"
+                    android:text="@string/get_api" />
+
+                <LinearLayout
+                    android:id="@+id/generic_name_ll"
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textview.MaterialTextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="24dp"
-                        android:layout_marginEnd="16dp"
-                        android:hint="@string/medicine_name_hint"
-                        android:textSize="24sp" />
+                        android:paddingTop="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="Generic Name"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
-                </com.google.android.material.textfield.TextInputLayout>
-           <ImageView
-               android:layout_width="60dp"
-               android:layout_height="60dp"
-               android:layout_weight="1"
-               android:layout_marginEnd="8dp"
+                    <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/generic_name_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="Generic Name"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp" />
 
-               android:id="@+id/bar_code"
-               android:src="@drawable/bar_code_24"/>
-            </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/laberler_name_ll"
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textview.MaterialTextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="Labeler Name"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/labeler_name_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="Labeler Name"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:id="@+id/brand_name_ll"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="Brand Name"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/brand_name_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="Brand Name"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:id="@+id/ingredents_name_ll"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="Active Ingredients Names"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/active_ingred_name_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="Ingredients Name"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ingredents_strength_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="Active Ingredients Strength"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/active_ingred_strength_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="4dp"
+                        android:text="Strength"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -83,6 +259,7 @@ android:id="@+id/hhhhh"
                     android:text="@string/string_from"
                     android:textColor="@color/color_primary"
                     android:textSize="12sp" />
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/text_view_select_date"
                     android:layout_width="wrap_content"
@@ -235,9 +412,9 @@ android:id="@+id/hhhhh"
                             android:id="@+id/chip_notification"
                             style="@style/Widget.MaterialComponents.Chip.Choice"
                             android:layout_width="wrap_content"
-                            android:visibility="gone"
                             android:layout_height="wrap_content"
-                            android:text="@string/notification" />
+                            android:text="@string/notification"
+                            android:visibility="gone" />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/chip_alarm"

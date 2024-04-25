@@ -14,9 +14,12 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -30,12 +33,17 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.sickle.healthcareapp.AlarmActivity;
 import com.sickle.healthcareapp.BarCodeActivity;
 import com.sickle.healthcareapp.HomeActivity;
 import com.sickle.healthcareapp.db.DatabaseHelper;
+import com.sickle.healthcareapp.fireStoreApi.FireStoreDB;
 import com.sickle.healthcareapp.home.time.TimeAdapter;
 import com.sickle.healthcareapp.home.time.TimeSelectorItem;
+import com.sickle.healthcareapp.model.medicineNameModels.MedicineFireStoreModel;
+import com.sickle.healthcareapp.model.medicineNameModels.Result;
+import com.sickle.healthcareapp.model.medicineNameModels.Root;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,13 +54,32 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class AddDialog extends DialogFragment implements Toolbar.OnMenuItemClickListener {
-    public static final String TAG = "Add_Dialog";
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Query;
 
+public class AddDialog extends DialogFragment implements Toolbar.OnMenuItemClickListener {
+
+    public static final String TAG = "Add_Dialog";
+    private static final String FDA_API_KEY = "tvCQTJlyexutBbdOX2MUkftYYWPzaqD6pQDz1b3K";
     private MaterialToolbar toolbar;
     private MaterialTextView textViewDate;
     private EditText editTextMedicineName;
+
+    private FireStoreDB fireStoreDB;
+
+    private TextView generic_name_tv, labeler_name_tv, brand_name_tv, active_ingred_name_tv, active_ingred_strength_tv;
+
+    private LinearLayout generic_name_ll, laberler_name_ll, brand_name_ll, ingredents_name_ll, ingredents_strength_ll;
     private ChipGroup chipGroupScheduleTimes, chipGroupAlertType;
+
+    private Button get_api_btn;
+    public static String barCodeScanned = "";
     private Chip chipSelected;
     private int[] chipArrayIds = {R.id.chip1, R.id.chip2, R.id.chip3, R.id.chip4, R.id.chip5};
     private int[] chipAlertArrayIds = {R.id.chip_notification, R.id.chip_alarm};
@@ -68,17 +95,105 @@ public class AddDialog extends DialogFragment implements Toolbar.OnMenuItemClick
     private Calendar calendar;
 
     public MedicineActivity medicineActivity;
-ImageView barcode;
+    ImageView barcode;
+
     public AddDialog(MedicineActivity medicineActivity) {
         this.medicineActivity = medicineActivity;
     }
-
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NORMAL, R.style.AppTheme_FullScreenDialog);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        editTextMedicineName.setText(barCodeScanned);
+    }
+
+    public void onMedicineInserted(boolean inserted, String errorMessage) {
+        if (inserted) {
+            dismiss();
+            Toast.makeText(getActivity(), "Medicine Inserted Successfully ", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getActivity(), "Error Inserting Medicine Data " + errorMessage, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public interface FdaApi {
+        @GET("drug/ndc.json")
+        Call<Root> getSubstanceData(@Query("search") String searchQuery, @Header("Authorization") String authorization);
+    }
+
+    private void getFdaData(String searchCode) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.fda.gov/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        FdaApi fdaApi = retrofit.create(FdaApi.class);
+
+        Call<Root> call = fdaApi.getSubstanceData("packaging.package_ndc:" + searchCode, "Bearer " + FDA_API_KEY);
+        call.enqueue(new Callback<Root>() {
+            @Override
+            public void onResponse(Call<Root> call, Response<Root> response) {
+                if (response.isSuccessful()) {
+
+                    showLinearLayouts(true);
+
+
+                    Root rootObj = response.body();
+                    if (rootObj != null && rootObj.results != null && !rootObj.results.isEmpty()) {
+
+                        Result result = rootObj.results.get(0);
+
+                        generic_name_tv.setText(result.generic_name);
+                        labeler_name_tv.setText(result.labeler_name);
+                        brand_name_tv.setText(result.brand_name);
+                        active_ingred_name_tv.setText(result.active_ingredients.get(0).name);
+                        active_ingred_strength_tv.setText(result.active_ingredients.get(0).strength);
+
+                        Toast.makeText(getActivity(), "FDA API Substance Code: " + result.product_ndc, Toast.LENGTH_LONG).show();
+
+                    } else {
+                        Toast.makeText(getActivity(), "FDA API Data not available", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Failed to get FDA API data with code: " + response.code(), Toast.LENGTH_SHORT).show();
+
+                    showLinearLayouts(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Root> call, Throwable t) {
+                Toast.makeText(getActivity(), "FDA API Network error", Toast.LENGTH_SHORT).show();
+
+                showLinearLayouts(false);
+            }
+        });
+    }
+
+    private void showLinearLayouts(boolean show) {
+
+        if (show) {
+            brand_name_ll.setVisibility(View.VISIBLE);
+            ingredents_strength_ll.setVisibility(View.VISIBLE);
+            ingredents_name_ll.setVisibility(View.VISIBLE);
+            laberler_name_ll.setVisibility(View.VISIBLE);
+            generic_name_ll.setVisibility(View.VISIBLE);
+
+        } else {
+            brand_name_ll.setVisibility(View.GONE);
+            ingredents_strength_ll.setVisibility(View.GONE);
+            ingredents_name_ll.setVisibility(View.GONE);
+            laberler_name_ll.setVisibility(View.GONE);
+            generic_name_ll.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -98,13 +213,26 @@ ImageView barcode;
         super.onCreateView(inflater, container, savedInstanceState);
         View root = inflater.inflate(R.layout.add_medicine_dialog, container, false);
 
+        fireStoreDB = new FireStoreDB();
         toolbar = root.findViewById(R.id.toolbar);
         textViewDate = root.findViewById(R.id.text_view_select_date);
+        brand_name_ll = root.findViewById(R.id.brand_name_ll);
+        ingredents_strength_ll = root.findViewById(R.id.ingredents_strength_ll);
+        get_api_btn = root.findViewById(R.id.get_api_btn);
+        ingredents_name_ll = root.findViewById(R.id.ingredents_name_ll);
+        laberler_name_ll = root.findViewById(R.id.laberler_name_ll);
+        generic_name_ll = root.findViewById(R.id.generic_name_ll);
+        generic_name_tv = root.findViewById(R.id.generic_name_tv);
+        labeler_name_tv = root.findViewById(R.id.labeler_name_tv);
+        brand_name_tv = root.findViewById(R.id.brand_name_tv);
+        active_ingred_name_tv = root.findViewById(R.id.active_ingred_name_tv);
+        active_ingred_strength_tv = root.findViewById(R.id.active_ingred_strength_tv);
         editTextMedicineName = root.findViewById(R.id.editText_medicine_name);
+        editTextMedicineName.setText(barCodeScanned);
         chipGroupScheduleTimes = root.findViewById(R.id.chip_group_times);
         recyclerView = root.findViewById(R.id.recycler_view_time);
         numberPicker = root.findViewById(R.id.number_picker_number_doses);
-        barcode=root.findViewById(R.id.bar_code);
+        barcode = root.findViewById(R.id.bar_code);
         chipGroupAlertType = root.findViewById(R.id.chip_group_alert_type);
         chipSelected = root.findViewById(chipGroupAlertType.getCheckedChipId());
 
@@ -122,6 +250,15 @@ ImageView barcode;
         toolbar.inflateMenu(R.menu.add_dialog_menu);
         toolbar.setOnMenuItemClickListener(this);
 
+        get_api_btn.setOnClickListener(View -> {
+            if (!editTextMedicineName.getText().toString().trim().isEmpty()) {
+                getFdaData(editTextMedicineName.getText().toString().trim());
+            } else {
+                Toast.makeText(getActivity(), "Scan or rrite NDC to proceed ahead", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
         final Calendar c = Calendar.getInstance();
         int mYear = c.get(Calendar.YEAR); // current year
         int mMonth = c.get(Calendar.MONTH); // current month
@@ -132,12 +269,12 @@ ImageView barcode;
         SimpleDateFormat format = new SimpleDateFormat("EEEE, MMMM d, yyyy");
         textViewDate.setText(format.format(calendar.getTime()));
 
-barcode.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        startActivity(new Intent(getContext(), BarCodeActivity.class));
-    }
-});
+        barcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), BarCodeActivity.class));
+            }
+        });
         textViewDate.setOnClickListener(view1 -> {
             DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
                     (view2, year, monthOfYear, dayOfMonth) -> {
@@ -177,7 +314,7 @@ barcode.setOnClickListener(new View.OnClickListener() {
         recyclerView.setAdapter(adapter);
         chipGroupScheduleTimes.setOnCheckedChangeListener((chipGroup, id) -> {
             Chip chip = chipGroup.findViewById(id);
-            if (chip != null){
+            if (chip != null) {
                 for (int iTmp = 0; iTmp < chipArrayIds.length; iTmp++) {
                     if (chipGroup.getCheckedChipId() == chipArrayIds[iTmp]) {
                         mPerDay = iTmp + 1;
@@ -224,9 +361,18 @@ barcode.setOnClickListener(new View.OnClickListener() {
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         MedicineActivity medicineActivity = (MedicineActivity) getActivity();
-        String medicineName = editTextMedicineName.getText().toString();
-        if (medicineName.isEmpty()) {
+        String medicineNDC = editTextMedicineName.getText().toString();
+        String medicineName = brand_name_tv.getText().toString();
+        String activeIngredientStrength = active_ingred_strength_tv.getText().toString();
+        String activeIngredientName = active_ingred_name_tv.getText().toString();
+
+        if (medicineNDC.isEmpty()) {
             editTextMedicineName.setError("Enter a name");
+            return false;
+        }
+
+        if (medicineName.isEmpty()) {
+            brand_name_tv.setError("Enter a name");
             return false;
         }
         if (medicineActivity.timeItems.size() != mPerDay) {
@@ -254,12 +400,35 @@ barcode.setOnClickListener(new View.OnClickListener() {
         }
         String timingList = json.toString();
         Log.d(TAG, "arrayList:" + timingList);
+
+
+        MedicineFireStoreModel medicineFireStoreModel = new MedicineFireStoreModel();
+        medicineFireStoreModel.setMedicineNDC(medicineNDC);
+        medicineFireStoreModel.setMedicineName(medicineName);
+        medicineFireStoreModel.setTotalDoses(noOfDoses);
+        medicineFireStoreModel.setActiveIngredientName(activeIngredientName);
+        medicineFireStoreModel.setActiveIngredientStrength(activeIngredientStrength);
+        medicineFireStoreModel.setAlertType(reminderAlterType);
+        medicineFireStoreModel.setTimings(timingList);
+        medicineFireStoreModel.setDay(day);
+        medicineFireStoreModel.setMonth(month);
+        medicineFireStoreModel.setYear(year);
+        medicineFireStoreModel.setNoOfTimesPerDay(noOfTimesPerDay);
+
+
+        fireStoreDB.insertNewMedicine(getActivity(), AddDialog.this, medicineFireStoreModel,
+                FirebaseAuth.getInstance().getCurrentUser().getEmail());
         DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
-        databaseHelper.insertNewMedicine(medicineName, day, month, year, noOfTimesPerDay, noOfDoses, timingList, reminderAlterType);
+
+
+        databaseHelper.insertNewMedicine(medicineName, day, month, year, noOfTimesPerDay,
+                noOfDoses, timingList, reminderAlterType, medicineNDC, activeIngredientName, activeIngredientStrength);
+
+
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, medicineActivity.timeItems.get(0).getHour());
-        Toast.makeText(medicineActivity, ""+ medicineActivity.timeItems.get(0).getHour(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(medicineActivity, ""+ medicineActivity.timeItems.get(0).getMinute(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(medicineActivity, "" + medicineActivity.timeItems.get(0).getHour(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(medicineActivity, "" + medicineActivity.timeItems.get(0).getMinute(), Toast.LENGTH_SHORT).show();
         calendar.set(Calendar.MINUTE, medicineActivity.timeItems.get(0).getMinute());
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
@@ -274,11 +443,9 @@ barcode.setOnClickListener(new View.OnClickListener() {
                 setAlarm(calendar, medicineName);
                 setNotification(calendar, medicineName);
                 break;
-
         }
-        Log.i("AddDialog.java", calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE));
-        medicineActivity.loadMedicines();
-        dismiss();
+
+        //Log.i("AddDialog.java", calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE));
         return true;
     }
 

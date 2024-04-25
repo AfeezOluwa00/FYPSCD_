@@ -54,7 +54,7 @@ public class DoctoreAdapter extends FirestoreRecyclerAdapter<Doctor, DoctoreAdap
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Snackbar.make(t, "Demande envoyée", Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(t, "Demand shipping", Snackbar.LENGTH_SHORT).show();
                             }
                         });
                 doctoreHolder.addDoc.setVisibility(View.INVISIBLE);

@@ -12,7 +12,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mysicklecellapp.R;import com.sickle.healthcareapp.model.User;
+import com.example.mysicklecellapp.R;
+import com.sickle.healthcareapp.Common.Common;
+import com.sickle.healthcareapp.model.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -100,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
             }else{
-                    Toast.makeText(MainActivity.this, "vous devez rensegner toutes les champs",
+                    Toast.makeText(MainActivity.this, "you must complete all fields",
                             Toast.LENGTH_SHORT).show();
                     if(!password.equals(confirmPass)){
                         Toast.makeText(MainActivity.this, "Confirm pass don't match password",
@@ -137,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
             }else{
-                    Toast.makeText(MainActivity.this, "vous devez rensegnier toutes les champs",
+                    Toast.makeText(MainActivity.this, "you must complete all fields",
                             Toast.LENGTH_SHORT).show();
                 }
             }
@@ -229,12 +231,13 @@ public class MainActivity extends AppCompatActivity {
                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                                     User user=documentSnapshot.toObject(User.class);
                                     if(user.getType().equals("Patient")){
+                                        Common.CurrentPatientPhone = user.getTel();
+                                        Common.CurrentPatientName = user.getName();
                                         Intent k = new Intent(MainActivity.this, HomeActivity.class);
                                         startActivity(k);
                                     }else{
                                         Intent k = new Intent(MainActivity.this, DoctorHomeActivity.class);
                                         startActivity(k);
-                                        //Snackbar.make(findViewById(R.id.main_layout), "Doctor interface entraint de realisation", Snackbar.LENGTH_SHORT).show();
                                     }
                                 }
                             });

@@ -50,7 +50,7 @@ public class AppointementActivity extends AppCompatActivity {
                         btn.setText("already choosen");
                     }
                     else{
-                        btn.setText("confirme this hour");
+                        btn.setText("confirm this hour");
                         btn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

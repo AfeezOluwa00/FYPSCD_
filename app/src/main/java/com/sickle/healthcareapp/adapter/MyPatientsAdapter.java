@@ -12,8 +12,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sickle.healthcareapp.ChatActivity;
-import com.sickle.healthcareapp.DossierMedical;
+import com.sickle.healthcareapp.DoctorSidePatientRiskActivity;
+import com.sickle.healthcareapp.MedicalFile;
 import com.example.mysicklecellapp.R;
+import com.sickle.healthcareapp.PatientVisualizationActivity;
 import com.sickle.healthcareapp.model.Patient;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -65,6 +67,26 @@ public class MyPatientsAdapter extends FirestoreRecyclerAdapter<Patient, MyPatie
             }
         });
 
+        myPatientsHolder.visualsBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), PatientVisualizationActivity.class);
+                intent.putExtra("patient_email",patient.getEmail());
+                v.getContext().startActivity(intent);
+
+            }
+        });
+
+        myPatientsHolder.risksBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), DoctorSidePatientRiskActivity.class);
+                intent.putExtra("patient_email",patient.getEmail());
+                v.getContext().startActivity(intent);
+
+            }
+        });
+
         String imageId = patient.getEmail()+".jpg"; //add a title image
         pathReference = FirebaseStorage.getInstance().getReference().child("DoctorProfile/"+ imageId); //storage the image
         pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -94,7 +116,7 @@ public class MyPatientsAdapter extends FirestoreRecyclerAdapter<Patient, MyPatie
     }
 
     private void openPatientMedicalFolder(Context medicalFolder, Patient patient){
-        Intent intent = new Intent(medicalFolder, DossierMedical.class);
+        Intent intent = new Intent(medicalFolder, MedicalFile.class);
         intent.putExtra("patient_name", patient.getName());
         intent.putExtra("patient_email",patient.getEmail());
         intent.putExtra("patient_phone", patient.getTel());
@@ -116,7 +138,7 @@ public class MyPatientsAdapter extends FirestoreRecyclerAdapter<Patient, MyPatie
 
     class MyPatientsHolder extends RecyclerView.ViewHolder{
         //Here we hold the MyDoctorItems
-        Button callBtn;
+        Button callBtn,visualsBTN,risksBTN;
         TextView textViewTitle;
         TextView textViewTelephone;
         ImageView imageViewPatient;
@@ -125,6 +147,8 @@ public class MyPatientsAdapter extends FirestoreRecyclerAdapter<Patient, MyPatie
         public MyPatientsHolder(@NonNull View itemView) {
             super(itemView);
             callBtn = itemView.findViewById(R.id.callBtn);
+            risksBTN = itemView.findViewById(R.id.risksBTN);
+            visualsBTN = itemView.findViewById(R.id.visualsBTN);
             textViewTitle = itemView.findViewById(R.id.patient_view_title);
             textViewTelephone = itemView.findViewById(R.id.text_view_telephone);
             imageViewPatient = itemView.findViewById(R.id.patient_item_image);

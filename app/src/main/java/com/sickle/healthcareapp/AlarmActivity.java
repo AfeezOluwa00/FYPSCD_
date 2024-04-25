@@ -26,6 +26,7 @@ public class AlarmActivity extends AppCompatActivity {
 
     TextView textViewMedicineName, textViewTime;
     Vibrator mVibrator;
+
     Button buttonDismiss, buttonSnooze;
 
     @Override

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sickle.healthcareapp.Common.Common;
 import com.sickle.healthcareapp.Interface.IRecyclerItemSelectedListener;
 import com.example.mysicklecellapp.R;
+import com.sickle.healthcareapp.MedicalFile;
 import com.sickle.healthcareapp.model.ApointementInformation;
 import com.sickle.healthcareapp.model.TimeSlot;
 import com.google.firebase.firestore.DocumentReference;
@@ -152,7 +153,25 @@ public class MyTimeSlotAdapter extends RecyclerView.Adapter<MyTimeSlotAdapter.My
 
                         alert.show();
 
+                    }else if(Common.CurrentUserType.equals("doctor")){
+
+                        TimeSlot timeSlot = new TimeSlot();
+                        for(int i = 0;i<timeSlotList.size();i++){
+                            if(position==timeSlotList.get(i).getSlot()){
+                                timeSlot = timeSlotList.get(i);
+                                break;
+                            }
+
+                        }
+
+
+                        Intent pageInt = new Intent(context, MedicalFile.class);
+                        pageInt.putExtra("patient_email",timeSlot.getPatientId());
+                        pageInt.putExtra("patient_name", timeSlot.getPatientName());
+                        pageInt.putExtra("patient_phone", timeSlot.getPatientPhone());
+                        context.startActivity(pageInt);
                     }
+
                 }
             });
         }

@@ -41,8 +41,10 @@ public class AddHydrationDialog extends DialogFragment {
     private void calculateTotal() {
         // Get values from EditTexts and sum them up
         int bottleOz = parseEditTextValue(hyd_bottle_oz_edt);
+        double totalBottleOz = bottleOz * 16.9;
         int glassOz = parseEditTextValue(hyd_glass_oz_edt);
-        int totalOz = bottleOz + glassOz;
+        double totalGlassOz = glassOz * 8;
+        double totalOz = totalBottleOz + totalGlassOz;
 
         hyd_manual_entry_oz_edt.setText(String.valueOf(totalOz));
     }
@@ -124,16 +126,16 @@ public class AddHydrationDialog extends DialogFragment {
                 return;
             }
 
-            if(Integer.parseInt(hyd_manual_entry_oz_edt.getText().toString().trim())==0){
+            if(Double.parseDouble(hyd_manual_entry_oz_edt.getText().toString().trim())==0.0){
                 Toast.makeText(getActivity(),"Total water ounces cannot be 0\nEnter water or glass ounces",Toast.LENGTH_SHORT).show();
                 return;
             }
 
             HydrationModel hydrationModel = new HydrationModel();
-            hydrationModel.setHydrationDate(Utilities.getCurrentTime() + "  at  " +Utilities.getCurrentDate());
+            hydrationModel.setHydrationDate(Utilities.getCurrentDate());
             hydrationModel.setOunceBottleValue(Integer.parseInt(hyd_bottle_oz_edt.getText().toString().trim()));
             hydrationModel.setOunceGlassValue(Integer.parseInt(hyd_glass_oz_edt.getText().toString().trim()));
-            hydrationModel.setOunceValue(Integer.parseInt(hyd_manual_entry_oz_edt.getText().toString().trim()));
+            hydrationModel.setOunceValue(Double.parseDouble(hyd_manual_entry_oz_edt.getText().toString().trim()));
 
 
             fireStoreDB.insertNewHydrationData(getActivity(),AddHydrationDialog.this,hydrationModel,

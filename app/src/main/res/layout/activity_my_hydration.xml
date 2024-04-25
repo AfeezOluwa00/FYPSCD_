@@ -56,5 +56,22 @@
         android:layout_height="wrap_content"
         />
 
+    <ImageView
+        android:id="@+id/fab_visualization_hydration"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:padding="6dp"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/baseline_auto_graph_24"
+        android:layout_below="@+id/top_ll"  />
+
+
+
+    <ProgressBar
+        android:id="@+id/progressPB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
 
 </RelativeLayout>

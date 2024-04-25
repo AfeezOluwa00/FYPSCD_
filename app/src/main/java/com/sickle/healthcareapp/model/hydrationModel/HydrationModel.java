@@ -4,7 +4,7 @@ public class HydrationModel {
 
     private int id;
     private String hydrationDate;
-    private int ounceValue;
+    private double ounceValue;
     private int ounceBottleValue;
     private int ounceGlassValue;
 
@@ -25,11 +25,11 @@ public class HydrationModel {
         this.hydrationDate = hydrationDate;
     }
 
-    public int getOunceValue() {
+    public double getOunceValue() {
         return ounceValue;
     }
 
-    public void setOunceValue(int ounceValue) {
+    public void setOunceValue(double ounceValue) {
         this.ounceValue = ounceValue;
     }
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.sickle.healthcareapp">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-feature
         android:name="android.hardware.telephony"
@@ -22,6 +21,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
 
     <application
         android:allowBackup="true"
@@ -30,6 +31,44 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity
+            android:name="com.sickle.healthcareapp.MyPainVisualActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.sickle.healthcareapp.MyMoodVisualActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.sickle.healthcareapp.MyHydrationVisualActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.sickle.healthcareapp.DetailedMoodSelectionActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.sickle.healthcareapp.MyHydration"
+            android:exported="false" />
+        <activity
+            android:name="com.sickle.healthcareapp.MyPainActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.sickle.healthcareapp.MyMoodActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.sickle.healthcareapp.MyTrackers"
+            android:exported="false" />
+
+        <activity
+            android:name="com.sickle.healthcareapp.DoctorSidePatientRiskActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.sickle.healthcareapp.RiskAssesmentActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.sickle.healthcareapp.WeatherActivity"
+            android:exported="false" />
         <activity
             android:name="com.sickle.healthcareapp.BarCodeActivity"
             android:exported="false" />
@@ -57,7 +96,16 @@
         <activity
             android:name="com.sickle.healthcareapp.PatientInfoActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name="com.sickle.healthcareapp.DossierMedical" />
+        <activity android:name="com.sickle.healthcareapp.MedicalFile" />
+
+        <activity android:name="com.sickle.healthcareapp.PatientVisualizationActivity" />
+
+        <activity android:name="com.sickle.healthcareapp.PatientMoodVisualActivity" />
+
+        <activity android:name="com.sickle.healthcareapp.PatientPainVisualActivity" />
+
+        <activity android:name="com.sickle.healthcareapp.PatientHydrationVisualActivity" />
+
         <activity android:name="com.sickle.healthcareapp.ChatActivity" />
         <activity
             android:name="com.sickle.healthcareapp.PatientRequestPage"
@@ -78,7 +126,7 @@
         <activity android:name="com.sickle.healthcareapp.MyDoctorsAvtivity" />
         <activity
             android:name="com.sickle.healthcareapp.ProfileDoctorActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme1" />
         <activity
             android:name=".AlarmActivity"
             android:excludeFromRecents="true"

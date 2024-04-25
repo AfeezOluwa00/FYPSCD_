@@ -15,8 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mysicklecellapp.R;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.sickle.healthcareapp.Interface.ItemClickListener;
 import com.sickle.healthcareapp.db.DatabaseHelper;
+import com.sickle.healthcareapp.fireStoreApi.FireStoreDB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,8 @@ public class MedicineActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private View root;
+
+    FireStoreDB fireStoreDB;
 
     DatabaseHelper databaseHelper;
 
@@ -41,6 +45,11 @@ public class MedicineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_medicine);
+
+        fireStoreDB = new FireStoreDB();
+        fireStoreDB.getAllMedicinesData(MedicineActivity.this,MedicineActivity.this,
+                FirebaseAuth.getInstance().getCurrentUser().getEmail());
+
         // Check if the permission is not granted
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.SCHEDULE_EXACT_ALARM)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -74,7 +83,7 @@ public class MedicineActivity extends AppCompatActivity {
             }
         };
 
-        loadMedicines();
+        //loadMedicines();
 
         ImageView fabAddMedicine = findViewById(R.id.fab_add_medicine);
         fabAddMedicine.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +114,15 @@ public class MedicineActivity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
         homeItems = databaseHelper.getMedicineList();
 
-        adapter = new HomeAdapter(homeItems, this, this, itemClickListener);
+        //adapter = new HomeAdapter(homeItems, this, this, itemClickListener);
         recyclerView.setAdapter(adapter);
+    }
+
+
+    public void setadapterForMedicinceData() {
+
+        adapter = new HomeAdapter( this, this, itemClickListener);
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 }

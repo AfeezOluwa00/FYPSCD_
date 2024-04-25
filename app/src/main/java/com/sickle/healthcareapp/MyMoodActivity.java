@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,7 +29,7 @@ import java.util.List;
 
 public class MyMoodActivity extends AppCompatActivity {
 
-    private ImageView fabAddMedicine;
+    private ImageView fabAddMedicine, fab_visualization_pain;
     private RecyclerView all_moods_list;
 
     private ArrayList<Mood> moodItems;
@@ -38,6 +40,7 @@ public class MyMoodActivity extends AppCompatActivity {
     FireStoreDB fireStoreDB;
 
 
+    ProgressBar progressPB;
 
 
     @Override
@@ -45,10 +48,11 @@ public class MyMoodActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_mood);
 
+        progressPB = findViewById(R.id.progressPB);
 
         fireStoreDB = new FireStoreDB();
 
-        fireStoreDB.getAllMoodsData(MyMoodActivity.this,MyMoodActivity.this,
+        fireStoreDB.getAllMoodsData(MyMoodActivity.this, MyMoodActivity.this,
                 FirebaseAuth.getInstance().getCurrentUser().getEmail());
 
         all_moods_list = findViewById(R.id.all_moods_list);
@@ -63,9 +67,16 @@ public class MyMoodActivity extends AppCompatActivity {
         all_moods_list.setLayoutManager(linearLayoutManager);
 
 
-
         //loadAllMoods();
 
+        fab_visualization_pain = findViewById(R.id.fab_visualization_pain);
+        fab_visualization_pain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MyMoodActivity.this, MyMoodVisualActivity.class);
+                startActivity(intent);
+            }
+        });
         fabAddMedicine = findViewById(R.id.fab_add_medicine);
         fabAddMedicine.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +100,8 @@ public class MyMoodActivity extends AppCompatActivity {
 
 
     public void setadapterForMedicinceData() {
-
+        progressPB.setVisibility(View.GONE);
+        //isDataLoaded = true;
         allMoodsAdapter = new AllMoodsAdapter(MyMoodActivity.this);
         all_moods_list.setAdapter(allMoodsAdapter);
         allMoodsAdapter.notifyDataSetChanged();

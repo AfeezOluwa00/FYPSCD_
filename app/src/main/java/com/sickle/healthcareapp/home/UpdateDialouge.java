@@ -255,7 +255,8 @@ public class UpdateDialouge extends DialogFragment implements Toolbar.OnMenuItem
         String timingList = json.toString();
         Log.d(TAG, "arrayList:" + timingList);
         DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
-        databaseHelper.insertNewMedicine(medicineName, day, month, year, noOfTimesPerDay, noOfDoses, timingList, reminderAlterType);
+        databaseHelper.insertNewMedicine(medicineName, day, month, year, noOfTimesPerDay,
+                noOfDoses, timingList, reminderAlterType,"","","");
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, medicineActivity.timeItems.get(0).getHour());
         calendar.set(Calendar.MINUTE, medicineActivity.timeItems.get(0).getMinute());

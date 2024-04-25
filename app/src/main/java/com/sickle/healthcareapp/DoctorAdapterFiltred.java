@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 public class DoctorAdapterFiltred  extends RecyclerView.Adapter<DoctorAdapterFiltred.DoctoreHolder2> implements Filterable {
-    public static boolean specialiteSearch = false;
+    public static boolean specialitySearch = false;
     static String doc;
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
     static CollectionReference addRequest = db.collection("Request");
@@ -60,7 +60,6 @@ public class DoctorAdapterFiltred  extends RecyclerView.Adapter<DoctorAdapterFil
         final Doctor doctor = mTubeListFiltered.get(i);
         final TextView t = doctoreHolder.title ;
         doctoreHolder.title.setText(doctor.getName());
-        /// ajouter l'image
 
         String imageId = doctor.getEmail()+".jpg";
         pathReference = FirebaseStorage.getInstance().getReference().child("DoctorProfile/"+ imageId);
@@ -82,7 +81,7 @@ public class DoctorAdapterFiltred  extends RecyclerView.Adapter<DoctorAdapterFil
                 // Handle any errors
             }
         });
-        doctoreHolder.specialite.setText("Specialite : "+doctor.getSpecialite());
+        doctoreHolder.specialite.setText("speciality : "+doctor.getSpecialite());
         final String idPat = FirebaseAuth.getInstance().getCurrentUser().getEmail().toString();
         final String idDoc = doctor.getEmail();
         // doctoreHolder.image.setImageURI(Uri.parse("drawable-v24/ic_launcher_foreground.xml"));
@@ -96,7 +95,7 @@ public class DoctorAdapterFiltred  extends RecyclerView.Adapter<DoctorAdapterFil
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Snackbar.make(t, "Demande envoyée", Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(t, "Demand shipping", Snackbar.LENGTH_SHORT).show();
                             }
                         });
                 doctoreHolder.addDoc.setVisibility(View.INVISIBLE);
@@ -132,7 +131,7 @@ public class DoctorAdapterFiltred  extends RecyclerView.Adapter<DoctorAdapterFil
                 } else {
                     List<Doctor> filteredList = new ArrayList<>();
                     for(Doctor tube: mTubeList){
-                        if(specialiteSearch == false) {
+                        if(specialitySearch == false) {
                             if (tube.getName().toLowerCase().contains(pattern) || tube.getName().toLowerCase().contains(pattern)) {
                                 filteredList.add(tube);
                             }

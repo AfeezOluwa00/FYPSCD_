@@ -1,7 +1,7 @@
 package com.sickle.healthcareapp.model;
 
 public class ApointementInformation {
-    private  String patientName,time,doctorId,doctorName,patientId,type,apointementType,chemin;
+    private  String patientName,time,doctorId,doctorName,patientId,patientPhone,type,apointementType,chemin;
     private long slot;
 
     public String getApointementType() {
@@ -10,6 +10,14 @@ public class ApointementInformation {
 
     public void setApointementType(String apointementType) {
         this.apointementType = apointementType;
+    }
+
+    public String getPatientPhone() {
+        return patientPhone;
+    }
+
+    public void setPatientPhone(String patientPhone) {
+        this.patientPhone = patientPhone;
     }
 
     public String getChemin() {

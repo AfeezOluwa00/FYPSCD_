@@ -1,11 +1,14 @@
 package com.sickle.healthcareapp.adapter;
 
+import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.squareup.picasso.Picasso;
+
 
 import com.example.mysicklecellapp.R;
 import com.sickle.healthcareapp.model.ApointementInformation;
@@ -15,7 +18,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,14 +37,16 @@ public class ConfirmedAppointmentsAdapter extends FirestoreRecyclerAdapter<Apoin
         String imageId = apointementInformation.getPatientId()+".jpg"; //add a title image
         pathReference = FirebaseStorage.getInstance().getReference().child("DoctorProfile/"+ imageId); //storage the image
         pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
+           @Override
             public void onSuccess(Uri uri) {
-                Picasso.with(confirmedAppointmentsHolder.patientImage.getContext())
-                        .load(uri)
-                        .placeholder(R.mipmap.ic_launcher)
-                        .fit()
-                        .centerCrop()
-                        .into(confirmedAppointmentsHolder.patientImage);//Image location
+                Context context = confirmedAppointmentsHolder.patientImage.getContext();
+               Picasso.with(context)
+                     .load(uri)
+                       .placeholder(R.mipmap.ic_launcher)
+                       .fit()
+                       .centerCrop()
+                        .into(confirmedAppointmentsHolder.patientImage);
+//
 
                 // profileImage.setImageURI(uri);
             }

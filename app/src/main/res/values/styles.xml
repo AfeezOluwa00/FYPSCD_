@@ -450,6 +450,11 @@
         <item name="android:textSize" >16dp</item>
     </style>
 
+    <style name="AppTheme1" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Other style attributes -->
+    </style>
+
+
     <!-- Misc -->
     <style name="Widget.MedDose.EmptyResults">
         <item name="android:drawablePadding">@dimen/margin_normal</item>

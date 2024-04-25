@@ -6,12 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -23,9 +21,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sickle.healthcareapp.home.MedicineActivity;
-import com.sickle.healthcareapp.home.TimeItem;
-
-import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener{
 //    Button SignOutBtn;
@@ -89,16 +84,17 @@ medicines.setOnClickListener(new View.OnClickListener() {
                 startActivity(k);
             }
         });
-//        SignOutBtn=findViewById(R.id.signOutBtn);
-//        SignOutBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FirebaseAuth.getInstance().signOut();
-//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(intent);
-//            }
-//        });
+
+        myDoctors = (LinearLayout) findViewById(R.id.mydoctor);
+        myDoctors.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent k = new Intent(HomeActivity.this, MyDoctorsAvtivity.class);
+                startActivity(k);
+            }
+        });
+
+
 
         myDoctors = (LinearLayout) findViewById(R.id.mydoctor);
         myDoctors.setOnClickListener(new View.OnClickListener() {
@@ -112,20 +108,44 @@ medicines.setOnClickListener(new View.OnClickListener() {
         BtnRequst.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), DossierMedical.class);
+                Intent intent = new Intent(getApplicationContext(), MedicalFile.class);
                 intent.putExtra("patient_email",FirebaseAuth.getInstance().getCurrentUser().getEmail().toString());
                 startActivity(intent);
             }
         });
 
-//        profile = findViewById(R.id.profile);
-//        profile.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent k = new Intent(HomeActivity.this, ProfilePatientActivity.class);
-//                startActivity(k);
-//            }
-//        });
+        LinearLayout riskCalBtn = findViewById(R.id.riskCalBtn);
+        riskCalBtn.setOnClickListener(view->{
+            Intent intent = new Intent(HomeActivity.this, RiskAssesmentActivity.class);
+            startActivity(intent);
+        });
+
+
+        LinearLayout moodTrackerLayout = findViewById(R.id.MoodTracker);
+        LinearLayout weatherLayout = findViewById(R.id.WeatherBtn);
+
+        moodTrackerLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start a new activity for Mood Tracker
+                Intent intent = new Intent(HomeActivity.this, MyTrackers.class);
+                startActivity(intent);
+            }
+        });
+
+
+        weatherLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start a new activity for Weather
+                Intent intent = new Intent(HomeActivity.this, WeatherActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+
 
         Common.CurrentUserid= FirebaseAuth.getInstance().getCurrentUser().getEmail().toString();
         FirebaseFirestore.getInstance().collection("User").document(Common.CurrentUserid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -144,9 +164,13 @@ medicines.setOnClickListener(new View.OnClickListener() {
                 break;
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
+                Common.CurrentPatientName = "";
+                Common.CurrentPatientPhone = "";
+                Common.CurrentUserType = "patient";
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);                break;
+                startActivity(intent);
+                break;
             case R.id.privacypolicy:
                 //  getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
                 break;

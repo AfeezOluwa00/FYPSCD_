@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
-            android:hint="hint" />
+            android:hint="Message" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- ADD MESSAGE BUTTON -->

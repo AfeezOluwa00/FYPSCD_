@@ -1,17 +1,19 @@
 package com.sickle.healthcareapp;
 
-import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.mysicklecellapp.R;
+import com.sickle.healthcareapp.home.AddDialog;
 
+import java.util.List;
+
+import me.dm7.barcodescanner.zbar.Result;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,15 +22,16 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public class BarCodeActivity extends AppCompatActivity {
 
     private static final int CAMERA_PERMISSION_REQUEST_CODE = 1;
     private ZBarScannerView scannerView;
 
-    // Replace "YOUR_API_KEY" with your actual API key from upcdatabase.org
-    private static final String UPC_DATABASE_API_KEY = "YOUR_API_KEY";
+    // FDA API key (replace with your actual key)
+    private static final String FDA_API_KEY = "tvCQTJlyexutBbdOX2MUkftYYWPzaqD6pQDz1b3K";
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,48 +50,24 @@ public class BarCodeActivity extends AppCompatActivity {
         // Initialize the scannerView
         scannerView = new ZBarScannerView(this);
         setContentView(scannerView);
+        scannerView.setResultHandler(new ZBarScannerView.ResultHandler() {
+            @Override
+            public void handleResult(Result rawResult) {
+                AddDialog.barCodeScanned = rawResult.getContents();
+
+                    onBackPressed();
+
+                Toast.makeText(BarCodeActivity.this,
+                        rawResult.getContents(),Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Start the scanner
-        scannerView.setResultHandler(result -> {
-            String scannedContent = result.getContents();
-            getProductInformation(scannedContent);
-        });
+//        scannerView.setResultHandler(result -> {
+//            String scannedContent = result.getContents();
+//            getFdaData(scannedContent);
+//        });
         scannerView.startCamera(); // Start camera on resume
-    }
-
-    private void getProductInformation(String barcode) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.upcdatabase.org/product/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        UpcDatabaseApi upcDatabaseApi = retrofit.create(UpcDatabaseApi.class);
-
-        Call<UpcDatabaseResponse> call = upcDatabaseApi.getProductInfo(barcode, "Token " + UPC_DATABASE_API_KEY);
-        call.enqueue(new Callback<UpcDatabaseResponse>() {
-            @Override
-            public void onResponse(Call<UpcDatabaseResponse> call, Response<UpcDatabaseResponse> response) {
-                if (response.isSuccessful()) {
-                    UpcDatabaseResponse productInfo = response.body();
-                    if (productInfo != null && productInfo.getItem() != null) {
-                        String productName = productInfo.getItem().getTitle();
-                        Toast.makeText(BarCodeActivity.this, "Product Name: " + productName, Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(BarCodeActivity.this, "Product information not available", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(BarCodeActivity.this, "Failed to get product information", Toast.LENGTH_SHORT).show();
-                }
-
-                finish();
-            }
-
-            @Override
-            public void onFailure(Call<UpcDatabaseResponse> call, Throwable t) {
-                Toast.makeText(BarCodeActivity.this, "Network error", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
     }
 
     @Override
@@ -105,36 +84,70 @@ public class BarCodeActivity extends AppCompatActivity {
         if (scannerView != null) {
             scannerView.stopCamera();
         }
+
+
     }
 
-    // Retrofit interface for upcdatabase.org API
-    public interface UpcDatabaseApi {
-        @GET("{id}")
-        Call<UpcDatabaseResponse> getProductInfo(@Path("id") String id, @Header("Authorization") String authorization);
+    // Retrofit interface for FDA API
+    public interface FdaApi {
+        @GET("drug/ndc.json")
+        Call<FdaApiResponse> getSubstanceData(@Query("search") String searchQuery, @Header("Authorization") String authorization);
     }
 
-    // Model class for the API response
-    public class UpcDatabaseResponse {
-        private Item item;
+    // Model class for FDA API response
+    public class FdaApiResponse {
+        // Define your model based on the JSON response structure
+        // Example: Assume a field called 'results' is present in the JSON
+        private List<Substance> results;
 
-        public Item getItem() {
-            return item;
-        }
-
-        public void setItem(Item item) {
-            this.item = item;
+        public List<Substance> getResults() {
+            return results;
         }
     }
 
-    public class Item {
-        private String title;
+    // Model class for the 'substance' object in the FDA API response
+    public class Substance {
+        // Define fields based on the actual structure of 'substance' in the JSON response
+        // Example: Assume a field called 'code' is present in the 'substance' object
+        private String code;
 
-        public String getTitle() {
-            return title;
+        public String getCode() {
+            return code;
         }
+    }
 
-        public void setTitle(String title) {
-            this.title = title;
-        }
+    private void getFdaData(String searchCode) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.fda.gov/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        FdaApi fdaApi = retrofit.create(FdaApi.class);
+
+        Call<FdaApiResponse> call = fdaApi.getSubstanceData("codes.code:" + searchCode, "Bearer " + FDA_API_KEY);
+        call.enqueue(new Callback<FdaApiResponse>() {
+            @Override
+            public void onResponse(Call<FdaApiResponse> call, Response<FdaApiResponse> response) {
+                if (response.isSuccessful())
+                {
+                    FdaApiResponse fdaData = response.body();
+                    if (fdaData != null && fdaData.getResults() != null && !fdaData.getResults().isEmpty()) {
+                        Substance substance = fdaData.getResults().get(0);
+                        // Access other fields as needed, for example:
+                        String substanceCode = substance.getCode();
+                        Toast.makeText(BarCodeActivity.this, "FDA API Substance Code: " + substanceCode, Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(BarCodeActivity.this, "FDA API Data not available", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(BarCodeActivity.this, "Failed to get FDA API data", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FdaApiResponse> call, Throwable t) {
+                Toast.makeText(BarCodeActivity.this, "FDA API Network error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
