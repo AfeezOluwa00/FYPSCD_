@@ -116,10 +116,7 @@ public class SearchPatActivity extends AppCompatActivity {
                 DoctorAdapterFiltred.specialitySearch = true;
                 adapter.getFilter().filter("General Medicine");
                 return true;
-            case R.id.option_Dentiste:
-                DoctorAdapterFiltred.specialitySearch = true;
-                adapter.getFilter().filter("Dentist");
-                return true;
+
             case R.id.option_Ophtalmologue:
                 DoctorAdapterFiltred.specialitySearch = true;
                 adapter.getFilter().filter("Ophthalmologist");
