@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/contact_name_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Contact Name"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/contact_number_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/contact_name_edit_text"
+        android:layout_marginTop="16dp"
+        android:hint="Contact Number"
+        android:inputType="phone" />
+
+    <Button
+        android:id="@+id/save_contact_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/contact_number_edit_text"
+        android:layout_marginTop="16dp"
+        android:text="Save Contact" />
+
+    <Button
+        android:id="@+id/panic_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/save_contact_button"
+        android:layout_marginTop="16dp"
+        android:text="Panic Button" />
+
+</RelativeLayout>

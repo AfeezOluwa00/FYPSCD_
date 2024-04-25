@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/hhhhh"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="30dp">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#052093"
+        android:paddingStart="6dp"
+        android:paddingEnd="16dp"
+
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:contentInsetStartWithNavigation="0dp"
+        app:navigationIcon="@drawable/ic_close_black_24dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:subtitleTextColor="@color/white"
+        app:titleTextColor="@color/white"
+        />
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/add_pain_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:text="Where is the pain"
+                android:textColor="@color/black"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/pain_continent_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_below="@+id/add_pain_tv"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+
+                <!--First Pain Container-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/filter_no_pain_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No Pain"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <CheckBox
+                        android:id="@+id/filter_front_head_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Front Head"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <CheckBox
+                        android:id="@+id/filter_back_head_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Back Head"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+
+
+
+                </LinearLayout>
+
+                <!--Second Pain Container-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/filter_neck_pain_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Neck"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <CheckBox
+                        android:id="@+id/filter_throat_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Throat"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <CheckBox
+                        android:id="@+id/filter_left_ear_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Left Ear"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <CheckBox
+                        android:id="@+id/filter_right_ear_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Right Ear"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+
+                </LinearLayout>
+
+                <!--Third Pain Container-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/filter_lips_pain_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lips"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <CheckBox
+                        android:id="@+id/filter_nose_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Nose"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <CheckBox
+                        android:id="@+id/filter_left_eye_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Left Eye"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <CheckBox
+                        android:id="@+id/filter_right_eye_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Right Eye"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+
+                </LinearLayout>
+
+                <!--Fourth Pain Container-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/filter_left_shoulder_pain_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Left Shoulder"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <CheckBox
+                        android:id="@+id/filter_right_shoulder_pain_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Right Shoulder"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <CheckBox
+                        android:id="@+id/filter_left_chest_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Left Chest"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <!--Fifth Pain Container-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/filter_right_chest_pain_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Right Chest"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <CheckBox
+                        android:id="@+id/filter_right_arm_pain_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Right Arm"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <CheckBox
+                        android:id="@+id/filter_left_arm_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Left Arm"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+
+
+
+                </LinearLayout>
+
+                <!--Sixth Pain Container-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/filter_abdominal_pain_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Abdomin"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <CheckBox
+                        android:id="@+id/filter_right_abdomin_pain_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Right Abdomin"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <CheckBox
+                        android:id="@+id/filter_left_abdomin_pain_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Left Abdomin"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <!--Seventh Pain Container-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/filter_upper_back_pain_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Upper Back"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <CheckBox
+                        android:id="@+id/filter_lower_back_pain_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Lower Back"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <CheckBox
+                        android:id="@+id/filter_whole_back_pain_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Whole Back"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <!--Eighth Pain Container-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/filter_right_leg_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Right Leg"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <CheckBox
+                        android:id="@+id/filter_left_leg_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Left Leg"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <CheckBox
+                        android:id="@+id/filter_right_knee_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Right Knee"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+
+
+
+                </LinearLayout>
+
+                <!--Ninth Pain Container-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/filter_right_foot_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Right Foot"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <CheckBox
+                        android:id="@+id/filter_left_foot_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Left Foot"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+                    <CheckBox
+                        android:id="@+id/filter_whole_head_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Head Ache"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <!--Tenth Pain Container-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/filter_chest_pain_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Chest"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <CheckBox
+                        android:id="@+id/filter_left_knee_chb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Left Knee"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/pain_level_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pain_continent_ll"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="20dp"
+                android:text="How Severe is it?"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+            <SeekBar
+                android:id="@+id/pain_level_skb"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_below="@+id/pain_level_tv"
+                android:layout_width="match_parent"
+                android:thumb="@drawable/thumb_seekbar"
+                android:layout_height="wrap_content"
+                android:max="10"/>
+
+            <LinearLayout
+                android:id="@+id/pain_count_level_ll"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/pain_level_skb"
+                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="Level Count: "
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    />
+
+                <TextView
+                    android:id="@+id/pain_level_count_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="0"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/pain_select_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pain_count_level_ll"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="40dp"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <RelativeLayout
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="10dp">
+
+
+                    <ImageView
+                        android:id="@+id/select_no_pain_iv"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:visibility="gone"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/rounded_view" />
+
+                    <ImageView
+                        android:id="@+id/no_pain_iv"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/happy" />
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="10dp">
+
+
+                    <ImageView
+                        android:id="@+id/select_little_pain_iv"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:visibility="gone"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/rounded_view" />
+
+                    <ImageView
+                        android:id="@+id/little_pain_iv"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/neutal" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="10dp">
+
+
+                    <ImageView
+                        android:id="@+id/select_pain_iv"
+                        android:layout_width="60dp"
+                        android:visibility="gone"
+                        android:layout_height="60dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/rounded_view" />
+
+                    <ImageView
+                        android:id="@+id/pain_iv"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/pain" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="10dp">
+
+
+                    <ImageView
+                        android:id="@+id/select_very_pain_iv"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:visibility="gone"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/rounded_view" />
+
+                    <ImageView
+                        android:id="@+id/very_pain_iv"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/very_painful" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginEnd="10dp">
+
+
+                    <ImageView
+                        android:id="@+id/select_severe_pain_iv"
+                        android:layout_width="60dp"
+                        android:visibility="gone"
+                        android:layout_height="60dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/rounded_view" />
+
+                    <ImageView
+                        android:id="@+id/severe_pain_iv"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/severe_pain" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/selected_pain_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pain_select_ll"
+                android:layout_alignParentStart="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="20dp"
+                android:text="Selected Pain: "
+                android:layout_marginStart="40dp"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                />
+
+
+            <TextView
+                android:id="@+id/pain_anything_note_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/selected_pain_tv"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="30dp"
+                android:text="Anything you want to note?"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+            <EditText
+                android:id="@+id/pain_notes_edt"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_below="@+id/pain_anything_note_tv"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_blue_line_edittext"
+                android:gravity="top|start"
+                android:hint="Write your note here"
+                android:inputType="textMultiLine"
+                android:maxLines="20"
+                android:padding="10dp"
+                android:scrollbars="vertical"
+                android:textColor="#000000"
+                android:textColorHint="#9E9E9E"
+                android:textStyle="normal" />
+
+
+
+            <Button
+                android:id="@+id/add_pain_btn"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#223699"
+                android:text="CONFIRM"
+                android:layout_below="@+id/pain_notes_edt"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                />
+
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+
+
+</RelativeLayout>

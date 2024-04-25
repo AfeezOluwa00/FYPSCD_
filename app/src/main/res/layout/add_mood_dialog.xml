@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/hhhhh"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="30dp">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#052093"
+        android:paddingStart="6dp"
+        android:paddingEnd="16dp"
+
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:contentInsetStartWithNavigation="0dp"
+        app:navigationIcon="@drawable/ic_close_black_24dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:subtitleTextColor="@color/white"
+        app:titleTextColor="@color/white"
+
+        />
+
+    <TextView
+        android:id="@+id/add_mood_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="10dp"
+        android:text="Choose an emotion"
+        android:textColor="@color/black"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
+
+    <LinearLayout
+        android:id="@+id/smile_select_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_mood_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="10dp">
+
+
+            <ImageView
+                android:id="@+id/select_excited_iv"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:src="@drawable/rounded_view" />
+
+            <ImageView
+                android:id="@+id/excited_iv"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/excited" />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="10dp">
+
+
+            <ImageView
+                android:id="@+id/select_happy_iv"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:src="@drawable/rounded_view" />
+
+            <ImageView
+                android:id="@+id/happy_iv"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/happy" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="10dp">
+
+
+            <ImageView
+                android:id="@+id/select_neutral_iv"
+                android:layout_width="60dp"
+                android:visibility="gone"
+                android:layout_height="60dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/rounded_view" />
+
+            <ImageView
+                android:id="@+id/neutral_iv"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/neutal" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="10dp">
+
+
+        <ImageView
+            android:id="@+id/select_sad_iv"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:src="@drawable/rounded_view" />
+
+            <ImageView
+                android:id="@+id/sad_iv"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/sad" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="10dp">
+
+
+        <ImageView
+            android:id="@+id/select_depressed_iv"
+            android:layout_width="60dp"
+            android:visibility="gone"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/rounded_view" />
+
+            <ImageView
+                android:id="@+id/depressed_iv"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/depressed" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/selected_emotion_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/smile_select_ll"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="20dp"
+        android:text="Selected Mood: "
+        android:layout_marginStart="40dp"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        />
+
+
+    <TextView
+        android:id="@+id/choose_level_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/selected_emotion_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="20dp"
+        android:text="Choose a level"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+
+    <SeekBar
+        android:id="@+id/emotion_level_skb"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_below="@+id/choose_level_tv"
+        android:layout_width="match_parent"
+        android:thumb="@drawable/thumb_seekbar"
+        android:layout_height="wrap_content"
+
+        android:max="10"/>
+
+    <LinearLayout
+        android:id="@+id/count_level_ll"
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/emotion_level_skb"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Level Count: "
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:id="@+id/level_count_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="0"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+
+    <TextView
+        android:id="@+id/anything_note_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/count_level_ll"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="30dp"
+        android:text="Anything you want to note?"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+
+    <EditText
+        android:id="@+id/notes_edt"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@+id/anything_note_tv"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/rounded_blue_line_edittext"
+        android:gravity="top|start"
+        android:hint="Write your note here"
+        android:inputType="textMultiLine"
+        android:maxLines="20"
+        android:padding="10dp"
+        android:scrollbars="vertical"
+        android:textColor="#000000"
+        android:textColorHint="#9E9E9E"
+        android:textStyle="normal" />
+
+    <Button
+        android:id="@+id/add_mood_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#223699"
+        android:text="CONFIRM"
+        android:layout_below="@+id/notes_edt"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+         />
+</RelativeLayout>
