@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "729864775751",
+    "firebase_url": "https://mysicklecellapp-default-rtdb.firebaseio.com",
+    "project_id": "mysicklecellapp",
+    "storage_bucket": "mysicklecellapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729864775751:android:e909dbb7d4eba96ddb6962",
+        "android_client_info": {
+          "package_name": "com.example.mysicklecellapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeIVbLK3rr1lIcEQmiycghzG_piSsqEkI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

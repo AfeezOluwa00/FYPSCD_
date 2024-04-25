@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+  >
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/icon"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Medicine name"
+        android:id="@+id/etName"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Schedule "
+        android:layout_marginTop="8dp"
+
+        android:id="@+id/schedule"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="time"
+        android:layout_marginTop="8dp"
+        android:id="@+id/etTime"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Dose "
+        android:id="@+id/noofDose"/>
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:id="@+id/update"
+        android:textAlignment="center"
+        android:padding="4dp"
+        android:layout_marginTop="16dp"
+
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="#da0c0c"
+        android:textColor="@color/white"
+        android:text="update"/>
+
+</LinearLayout>
